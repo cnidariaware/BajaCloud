@@ -1,33 +1,44 @@
-import time
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import pandas as pd
+import yaml
 
-hit_count = 0  # In-memory counter
+# Load the YAML file
+with open("./interview_database.yaml", 'r') as file:
+    interview_data = yaml.safe_load(file)
 
-def get_hit_count():
-    global hit_count
-    hit_count += 1
-    return hit_count
+# Access the nested structure within 'Data'
+flattened_data = []
+for date, date_info in interview_data['Data'].items():
+    meeting_duration = date_info.get('Meeting Duration')
+    
+    for start_time_info in date_info.get('Meeting Start Times', []):
+        for start_time, meeting_info in start_time_info.items():
+            interviewer_name = meeting_info['Interviewer'][0].get('Name')
+            interviewer_email = meeting_info['Interviewer'][1].get('Email')
+            interviewee_name = meeting_info['Interviewee'][0].get('Name')
+            interviewee_email = meeting_info['Interviewee'][1].get('Email')
+            category = meeting_info.get('Category')
+            status = meeting_info.get('Status')
+            slot = meeting_info.get('Slot')
+            
+            # Add flattened row to list
+            flattened_data.append({
+                'Date': date,
+                'Meeting Duration': meeting_duration,
+                'Start Time': start_time,
+                'Interviewer Name': interviewer_name,
+                'Interviewer Email': interviewer_email,
+                'Interviewee Name': interviewee_name,
+                'Interviewee Email': interviewee_email,
+                'Category': category,
+                'Status': status,
+                'Slot': slot
+            })
 
-class RequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        if self.path == '/':
-            count = get_hit_count()
-            response = f'Hello World! I have been seen {count} times.\n'
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(response.encode('utf-8'))
-        else:
-            self.send_response(404)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'Not Found\n')
-
-def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f'Starting server on port {port}...')
-    httpd.serve_forever()
-
-if __name__ == '__main__':
-    run()
+# Convert to DataFrame if flattened data is not empty
+if flattened_data:
+    df = pd.DataFrame(flattened_data)
+    # Write the DataFrame to an Excel file
+    df.to_excel("interview_database.xlsx", index=False)
+    print("Data has been written to interview_database.xlsx")
+else:
+    print("No data found to write.")
