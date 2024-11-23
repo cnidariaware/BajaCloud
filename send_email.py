@@ -1,8 +1,10 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from datetime import datetime, timedelta
+import pytz  # For timezone handling
 
-def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="brock", date="y", start_time="x"):
+def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="brock", date="10-1-2024", start_time="10:00 AM", location ="ENC25"):
     """ 
     Sends an email notification to the interviewee and a static Gmail account.
     
@@ -14,6 +16,19 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
     gmail_user = "uofcbaja.noreply@gmail.com"
     gmail_apppassword = "pver lpnt upjd zvld"
 
+    # Define Mountain Standard Time
+    mst = pytz.timezone("America/Edmonton")  # MST with Daylight Savings considered
+
+    # Parse the input date and time, localize to MST
+    start_datetime = mst.localize(datetime.strptime(f"{date} {start_time}", "%d-%m-%Y %I:%M %p"))
+    end_datetime = start_datetime + timedelta(minutes=30)
+
+    # Format date and time for the calendar URLs
+    start_time_google = start_datetime.strftime("%Y%m%dT%H%M%S")  # Google Calendar (Local time without Z)
+    end_time_google = end_datetime.strftime("%Y%m%dT%H%M%S")  # Google Calendar (Local time without Z)
+    outlook_start = start_datetime.isoformat()  # Outlook Calendar (ISO local time)
+    outlook_end = end_datetime.isoformat()  # Outlook Calendar (ISO local time)
+
     # Create message object
     msg = MIMEMultipart()
     msg['From'] = gmail_user
@@ -21,11 +36,36 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
     msg['Subject'] = "Interview Appointment Confirmation"
 
     # Message body
-    body = (f"Dear {interviewee_name},\n\n"
-            f"Your interview has been scheduled on {date} at {start_time}.\n"
-            "Please ensure to be available at the designated time.\n\n"
-            "Best regards,\nYour Interview Team")
-    msg.attach(MIMEText(body, 'plain'))
+    body = f'''
+    <html lang="en-US">
+      <head>
+        <title>Interview Invitation</title>
+      </head>
+      <body>
+        <p>Dear {interviewee_name},</p>
+        <p>Your interview has been scheduled on {date} at {start_time} MST.</p>
+        <p> Your interview location is at {location} or will be emailed to you.  </p>
+        <p>Please ensure to be available at the designated time.</p>
+        <a
+          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=UCalgary+Baja+Interview+with+{interviewee_name}&dates={start_time_google}/{end_time_google}&details=Interview+with+UCalgary+Baja+Team&location={location}"
+          target="_blank"
+        >
+          <button type="button" class="AddtoCal">Add to Google Calendar</button>
+        </a>
+        <a
+          href="https://outlook.live.com/calendar/0/deeplink/compose?subject=UCalgary+Baja+Interview+with+{interviewee_name}&body=Interview+with+UCalgary+Baja+Team&location={location}&startdt={outlook_start}&enddt={outlook_end}"
+          target="_blank"
+        >
+          <button type="button" class="AddtoCal">Add to Outlook Calendar</button>
+        </a>
+        <p>Best regards,</p>
+        <p>UCalgary Baja Interview Team</p>
+        <img src="https://picsum.photos/200/" alt="UCalgary Baja Team" />
+      </body>
+    </html>
+    '''
+
+    msg.attach(MIMEText(body, 'html'))
 
     try:
         # Setup the server and send the email
