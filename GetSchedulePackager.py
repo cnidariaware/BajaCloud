@@ -6,11 +6,11 @@ with open("./MockDB/schedule.yaml", "r") as scheduleyml:
 
 def getSchedulePackager():
     """ 
-    What function does
+    Formats and allows for the
 
     ``REQUIRES``: None
 
-    ``PROMISES``: What function returns if applicable
+    ``PROMISES``: ``JSON`` http response ready
 
     ``Develop in part by``: Brock T
 
@@ -23,3 +23,4 @@ def getSchedulePackager():
             "body": ymlschedule
         }
     return json.dumps(res)
+
