@@ -17,20 +17,17 @@ def SelectAppointment (appointmentJson):
     """
 
     status = mockWriteFunction(appointmentJson)
-    res = {"statusCode": 200,
-        "isBase64ENcoded": "false",
-        "headers": {
-            "Content-Type": "application/json",  # Specify content type
-            "X-IsBase64Encoded": "false"  # Indicating that the body is not base64 encoded
-        },
-        "body": ""}
     
     if status:
-        res["body"] = {"Success": True}
+        resBody = {"Success": True}
     else:
-        res["body"] = {"Success": False}
+        resBody = {"Success": False}
     
-    return json.dumps(res)
+    return {
+            "statusCode": 200,
+            "isBase64ENcoded": "false",
+            "body": json.dumps(resBody)
+        }
 
 def mockWriteFunction(appTime):
     return 0

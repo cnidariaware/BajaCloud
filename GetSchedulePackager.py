@@ -17,10 +17,10 @@ def getSchedulePackager():
     ``Contact``: darkicewolf50@gmail.ocm
 
     """
-    res = {
-           "isBase64ENcoded": "false",
+    
+    return {
             "statusCode": 200,
-            "body": ymlschedule
+            "isBase64ENcoded": "false",
+            "body": json.dumps(ymlschedule)
         }
-    return json.dumps(res)
 
