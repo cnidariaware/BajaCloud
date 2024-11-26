@@ -2,6 +2,8 @@ import json
 import signal
 import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from django.http import HttpResponse
+
 
 # Function to generate the response
 def send_funct():
