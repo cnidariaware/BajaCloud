@@ -7,8 +7,11 @@ from django.http import HttpResponse
 
 # Function to generate the response
 def send_funct():
-    to_send = {  
-        "body": "Hello this is a test"
+    ymlschedule = {"message": False}
+    to_send = {
+            "statusCode": 200,
+            "isBase64ENcoded": "false",
+            "body": json.dumps(ymlschedule)
     }
     return json.dumps(to_send)
 
