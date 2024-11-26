@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from . import newtest, getAppointments, selectAppointment
 
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
+    path("test", newtest.index, name="index"),
+    path("getSchedule", getAppointments.index, name="index"),
+    path("postSelectAppointment", selectAppointment.index, name="index"),
 ]
