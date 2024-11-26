@@ -6,5 +6,5 @@ services:
     volumes:
       - ./mock:/app
     build: .
-    networks:
-      - testnet
+    # networks:
+    #   - testnet
