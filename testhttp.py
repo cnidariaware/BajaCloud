@@ -15,4 +15,4 @@ def BenchMarkDjango():
 if __name__ == "__main__":
     djangoTime = timeit.timeit(stmt=BenchMarkDjango, number=10)
     pythonTime = timeit.timeit(stmt=BenchMarkServer, number=10)
-    print(f"Django: {djangoTime}\nPython: {pythonTime}")
+    print(f"FastAPI: {djangoTime}\nPython: {pythonTime}")
