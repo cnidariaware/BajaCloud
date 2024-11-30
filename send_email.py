@@ -60,7 +60,11 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
         </a>
         <p>Best regards,</p>
         <p>UCalgary Baja Interview Team</p>
-        <img src="https://picsum.photos/200/" alt="UCalgary Baja Team" />
+        <img
+          src="https://res.cloudinary.com/dpgrgsh7g/image/upload/v1733003224/UCalgaryBAJA_Logo-2024_mpmljh.png"
+          alt="UCalgary Baja Team"
+          height="120svh"
+        />
       </body>
     </html>
     '''

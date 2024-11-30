@@ -1,6 +1,5 @@
-import json
-import datetime
-import requests
+from WriteDB import AppendAppointment
+
 
 def SelectAppointment (appointmentJson):
     """ 
@@ -18,18 +17,15 @@ def SelectAppointment (appointmentJson):
     """
 
 
-    status = mockWriteFunction(appointmentJson)
+    status = AppendAppointment(date=appointmentJson["date"], start_time=appointmentJson["startTime"], interviewee_name=appointmentJson["intervieweeName"], interviewee_email=appointmentJson["intervieweeEmail"])
     
     if status:
-        resBody = {"Success": True, "message": ""}
+        resBody = {"Success": True}
     else:
-        resBody = {"Success": False, "message": ""}
+        resBody = {"Success": False}
     
-    resBody["message"] = appointmentJson["message"]
+    # resBody["message"] = appointmentJson for testing
     return resBody
-
-def mockWriteFunction(appTime):
-    return 0
 
 if __name__ == "__main__":
     print(SelectAppointment("10:00 AM"))
