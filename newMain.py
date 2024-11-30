@@ -1,6 +1,7 @@
 import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -29,7 +30,7 @@ def get_root():
 from GetSchedulePackager import getSchedulePackager
 
 @app.get("/getSchedule")
-def getSchedule():
+async def getSchedule():
     
     res = getSchedulePackager()
 
@@ -46,10 +47,15 @@ def getSchedule():
 
 from postSelectAppointment import SelectAppointment
 
-@app.post("/SelectInterview")
-def postSelectInterview(request):
+class Appointment(BaseModel):
+    name: str
+    date: str    
 
-    res = SelectAppointment(request)
+@app.post("/SelectInterview")
+async def postSelectInterview(rawRequest: dict):
+
+
+    res = SelectAppointment(rawRequest)
 
     return JSONResponse(
         headers={

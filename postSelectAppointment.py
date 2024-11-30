@@ -17,20 +17,16 @@ def SelectAppointment (appointmentJson):
     ``Contact``: darkicewolf50@gmail.com
     """
 
-    print(appointmentJson)
 
     status = mockWriteFunction(appointmentJson)
     
     if status:
-        resBody = {"Success": True}
+        resBody = {"Success": True, "message": ""}
     else:
-        resBody = {"Success": False}
+        resBody = {"Success": False, "message": ""}
     
-    return {
-            "statusCode": 200,
-            "isBase64ENcoded": "false",
-            "body": json.dumps(resBody)
-        }
+    resBody["message"] = appointmentJson["message"]
+    return resBody
 
 def mockWriteFunction(appTime):
     return 0
