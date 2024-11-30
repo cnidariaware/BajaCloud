@@ -1,5 +1,6 @@
 import json
 import datetime
+import requests
 
 def SelectAppointment (appointmentJson):
     """ 
@@ -15,6 +16,8 @@ def SelectAppointment (appointmentJson):
 
     ``Contact``: darkicewolf50@gmail.com
     """
+
+    print(appointmentJson)
 
     status = mockWriteFunction(appointmentJson)
     

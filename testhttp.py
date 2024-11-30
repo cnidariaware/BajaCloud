@@ -13,6 +13,13 @@ def BenchMarkDjango():
     # print(json.dumps(res, indent=1))
 
 if __name__ == "__main__":
-    djangoTime = timeit.timeit(stmt=BenchMarkDjango, number=10)
-    pythonTime = timeit.timeit(stmt=BenchMarkServer, number=10)
-    print(f"FastAPI: {djangoTime}\nPython: {pythonTime}")
+    test = 0
+    if test:
+        djangoTime = timeit.timeit(stmt=BenchMarkDjango, number=10)
+        pythonTime = timeit.timeit(stmt=BenchMarkServer, number=10)
+        print(f"FastAPI: {djangoTime}\nPython: {pythonTime}")
+    
+    reqbody = {
+        "body": {"message": "hello"}
+    }
+    rawRes = requests.post("http://localhost:8000/SelectInterview", reqbody)

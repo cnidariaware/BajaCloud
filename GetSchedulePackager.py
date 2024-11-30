@@ -19,8 +19,6 @@ def getSchedulePackager():
     """
     
     return {
-            "statusCode": 200,
-            "isBase64ENcoded": "false",
-            "body": json.dumps(ymlschedule)
+            "interviewDates": json.dumps(ymlschedule)
         }
 
