@@ -29,8 +29,8 @@ def get_root():
 
 from GetSchedulePackager import getSchedulePackager
 
-@app.get("/getSchedule")
-async def getSchedule():
+@app.get("/getAppointments")
+async def getAppointments():
     
     res = getSchedulePackager()
 

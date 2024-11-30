@@ -78,7 +78,7 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
         server.login(gmail_user, gmail_apppassword)
         server.sendmail(gmail_user, [interviewee_email, static_email], msg.as_string())
         server.quit()
-        print(f"Email sent successfully to {interviewee_email} and {static_email}.")
+        # print(f"Email sent successfully to {interviewee_email} and {static_email}.")
     except Exception as e:
         print(f"Failed to send email: {e}")
 

@@ -1,6 +1,8 @@
 import yaml
 import json
 
+from ReadDB import ReadDatabase
+
 with open("./MockDB/schedule.yaml", "r") as scheduleyml:
     ymlschedule = yaml.safe_load(scheduleyml)
 
@@ -17,8 +19,7 @@ def getSchedulePackager():
     ``Contact``: darkicewolf50@gmail.ocm
 
     """
-    
     return {
-            "interviewDates": json.dumps(ymlschedule)
+            "interviewDates": ReadDatabase()
         }
 
