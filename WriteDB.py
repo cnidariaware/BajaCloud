@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 from openpyxl import load_workbook
-#from send_email import send_email
+from send_email import send_email
 from filelock import FileLock 
 
 # Define the path to the Excel file and the lock file
@@ -93,7 +93,7 @@ def AppendAppointment(date, start_time, interviewee_name, interviewee_email):
                     email_cell.value = updated_emails
 
                     workbook.save(file_path)
-                    #send_email(interviewee_email, interviewee_name, date, start_time)
+                    send_email(interviewee_email, interviewee_name, date, start_time)
                     return True
 
     # If no slots available, return that the slot is unavailable
@@ -116,7 +116,7 @@ def run_tests():
     date_1 = "2024-09-16"
     start_time_1 = "10:30:00"
     interviewee_name_1 = "Alice Johnson"
-    interviewee_email_1 = "alice.johnson@example.com"
+    interviewee_email_1 = "ahmadmuhammadofficial@gmail.com"
     print(f"\nTest Case 1: Trying to book {date_1} at {start_time_1} for {interviewee_name_1} ({interviewee_email_1})")
     AppendAppointment(date_1, start_time_1, interviewee_name_1, interviewee_email_1)
 
@@ -137,4 +137,5 @@ def run_tests():
     AppendAppointment(date_3, start_time_3, interviewee_name_3, interviewee_email_3)
 
 # Run tests
-run_tests()
+if __name__ == "__main__":
+    run_tests()

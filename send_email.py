@@ -20,7 +20,7 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
     mst = pytz.timezone("America/Edmonton")  # MST with Daylight Savings considered
 
     # Parse the input date and time, localize to MST
-    start_datetime = mst.localize(datetime.strptime(f"{date} {start_time}", "%d-%m-%Y %I:%M %p"))
+    start_datetime = mst.localize(datetime.strptime(f"{date} {start_time}", "%Y-%m-%d %H:%M:%S"))
     end_datetime = start_datetime + timedelta(minutes=30)
 
     # Format date and time for the calendar URLs
@@ -78,4 +78,5 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-send_email()
+if __name__ == "__main__":
+  send_email()
