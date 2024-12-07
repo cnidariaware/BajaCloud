@@ -4,12 +4,12 @@ from filelock import FileLock, Timeout
 import time
 
 # Define the path to the Excel file and the lock file
-excel_file_path = "./interview_database.xlsx"
-lock_file_path = "./interview_database.xlsx.lock"
+excel_file_path = "./OR-L-Interview Data.xlsx"
+lock_file_path = "./OR-L-Interview Data.xlsx.lock"
 
 def ReadDatabase():
     """ 
-    Reads the Database
+    Reads the database for which slots are available
 
     ``REQUIRES``: None
     

@@ -70,7 +70,7 @@ def AppendAppointment(date, start_time, interviewee_name, interviewee_email):
         with FileLock(lock_path):  # Ensure process-safe access to the file
             # Load workbook and select "Sheet1" for updating appointments
             workbook = load_workbook(file_path)
-            sheet = workbook["Sheet1"]
+            sheet = workbook["Interview Timetable"]
             df = pd.read_excel(file_path)
 
             # Find and update the row that matches the provided date and start time
