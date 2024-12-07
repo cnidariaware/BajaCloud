@@ -7,6 +7,12 @@ import time
 excel_file_path = "./OR-L-Interview Data.xlsx"
 lock_file_path = "./OR-L-Interview Data.xlsx.lock"
 
+"""
+TODO change to dynamic file name
+    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
+    file_name = f"OR{year_donation}-L-Interview Data.xlsx" # name based off the 2025 naming system
+"""
+
 def ReadDatabase():
     """ 
     Reads the database for which slots are available
