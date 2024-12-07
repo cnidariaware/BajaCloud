@@ -17,7 +17,7 @@ Recruitment Responses:
   - Academic Year: 1st
   - Why are you interested in joining UCalgary BAJA?: Example Interest
   - Where did you hear about us?: Testing
-  - Are you available for team meetings/work days? Saturdays 10 am - 4 pm: Yes #add condiftional formatting for no to make whole line red
+  - Are you available for team meetings/work days? Saturdays 10 am - 4 pm: "Yes" #add condiftional formatting for no to make whole line red
 Interview TimeTable:
   - Date: 9/16/2024
   - Meeting Duration: 30 min
@@ -27,10 +27,11 @@ Interview TimeTable:
   - Interviewee Email: steve.the.bug@ucalgary.ca
   - Category (if not general): Test
   - Interviewer(s) Name(s): Example
-  - Status: Dropdown (Options in datahelp) #default is Unkown
+  - Status: Dropdown (Options in datahelp) #default is Unknown
 Data Helper:
   - Status Dropdown:
       - Unknown
       - Done
       - No Show
       - Cancelled/Moved
+  - How to Add Dropdown: Go into data, click data validation, select list then select the area you want to get values from in the formula spot
