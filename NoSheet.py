@@ -56,7 +56,7 @@ Data Helper And Info:
       - Done
       - No Show
       - Cancelled/Moved
-  - First time Startup: Call getschedule for the year
+  - First time Startup: Move docker volume pointer to new dirve and start pu container
   - How to Add Dropdown: Go into data, click data validation, select list then select the area you want to get values from in the formula spot
     """
     # uses the base above "yaml file" to create the base template
