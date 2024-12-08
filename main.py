@@ -35,7 +35,7 @@ def get_root():
         )
 
 
-from GetSchedulePackager import getSchedulePackager
+from interviewPackagers import getSchedulePackager
 
 @app.get("/getAppointments")
 async def getAppointments():
@@ -65,7 +65,7 @@ async def getAppointments():
         # status_code=200 commented out just to show how to change it if you wanted
         )
 
-from postSelectAppointment import SelectAppointment
+from interviewPackagers import SelectAppointment
 
 class Appointment(BaseModel):
     """

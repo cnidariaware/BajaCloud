@@ -4,105 +4,126 @@ from openpyxl import load_workbook
 from send_email import send_email
 from filelock import FileLock 
 
-# Define the path to the Excel file and the lock file
-file_path = "./interview_database.xlsx"
-lock_path = "./interview_database.xlsx.lock"  # Lock file for synchronization
+from NoSheet import NoSheet
+import datetime
+import os
 
 """
-TODO chnage to dynamic file name
-    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
-    file_name = f"OR{year_donation}-L-Interview Data.xlsx" # name based off the 2025 naming system
+TODO update to possibly not use pandas and update to use the new template
+TODO update name of functions to be more clear
 """
+
 def ReadDatabase():
     """ 
-    Reads the Database to retrieve available interview slots.
+    Reads the Database to retrieve available interview slots
 
     ``REQUIRES``: None
     
     ``PROMISES``: JSON (Available interview slots)
 
-    ``Developed by``: Ahmad
+    ``Developed by``: Ahmad, Brock
 
-    ``Contact``: ahmad.ahmad1@ucalgary.ca
+    ``Contact``: ahmad.ahmad1@ucalgary.ca, darkicewolf50@gmail.com
     """
-    # Use a file-based lock for thread-safe and process-safe access
-    with FileLock(lock_path):
-        # Load the Excel file into a pandas DataFrame with specific columns
-        df = pd.read_excel(file_path, usecols=['Date', 'Start Time', 'Slot', 'Interviewee Name', 'Interviewee Email', 'Meeting Duration'])
+    
+    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
+    # name based off the 2025 naming system
+    file_path = f"OR{year_donation}-L-Interview Data.xlsx"
+    lock_path = f"OR{year_donation}-L-Interview Data.xlsx.lock"
 
-    # Initialize the dictionary to store structured data for available slots
-    interview_data = {}
+    # checks for if the file exisits for the year otherwise it will create one
+    if not (os.path.isfile(file_path) or os.path.isfile(lock_path)):
+        NoSheet()
+    else:
+        # Use a file-based lock for thread-safe and process-safe access
+        with FileLock(lock_path):
+            # Load the Excel file into a pandas DataFrame with specific columns
+            df = pd.read_excel(file_path, usecols=['Date', 'Start Time', 'Slot', 'Interviewee Name', 'Interviewee Email', 'Meeting Duration'])
 
-    # Process each row in the DataFrame to structure data by date and time
-    for _, row in df.iterrows():
-        # Convert Date and Start Time to string format for easier comparison
-        date = str(row['Date']).split(" ")[0]  # Format date to YYYY-MM-DD
-        start_time = str(row['Start Time'])
-        
-        # Calculate the slot capacity and current number of interviewees
-        slot_capacity = int(row['Slot']) if not pd.isna(row['Slot']) else 0
-        interviewee_names = [name.strip() for name in str(row['Interviewee Name']).split(',') if name.strip()]
-        interviewee_count = len(interviewee_names) if interviewee_names != ["nan"] else 0
+        # Initialize the dictionary to store structured data for available slots
+        interview_data = {}
 
-        # Check if there are available slots for more interviewees
-        if interviewee_count < slot_capacity:
-            # Organize data by date and time, keeping track of available slots and meeting duration
-            if date not in interview_data:
-                interview_data[date] = {}
-            interview_data[date][start_time] = {
-                'Meeting Duration': row['Meeting Duration'],
-                'Available Slots': slot_capacity - interviewee_count
-            }
+        # Process each row in the DataFrame to structure data by date and time
+        for _, row in df.iterrows():
+            # Convert Date and Start Time to string format for easier comparison
+            date = str(row['Date']).split(" ")[0]  # Format date to YYYY-MM-DD
+            start_time = str(row['Start Time'])
+            
+            # Calculate the slot capacity and current number of interviewees
+            slot_capacity = int(row['Slot']) if not pd.isna(row['Slot']) else 0
+            interviewee_names = [name.strip() for name in str(row['Interviewee Name']).split(',') if name.strip()]
+            interviewee_count = len(interviewee_names) if interviewee_names != ["nan"] else 0
 
-    return interview_data
+            # Check if there are available slots for more interviewees
+            if interviewee_count < slot_capacity:
+                # Organize data by date and time, keeping track of available slots and meeting duration
+                if date not in interview_data:
+                    interview_data[date] = {}
+                interview_data[date][start_time] = {
+                    'Meeting Duration': row['Meeting Duration'],
+                    'Available Slots': slot_capacity - interviewee_count
+                }
+
+        return interview_data
 
 def AppendAppointment(date, start_time, interviewee_name, interviewee_email):
     """ 
     Appends a new appointment with the interviewee's name and email if the slot is available.
 
-    ``REQUIRES``: date (str), start_time (str), interviewee_name (str), interviewee_email (str)
+    ``REQUIRES``: ``str`` date, ``str`` start_time, ``str`` interviewee_name, ``str`` interviewee_email
     
-    ``PROMISES``: Updates the Excel file with the new interviewee's name and email if there is an available slot. Returns Bool.
+    ``PROMISES``: ``None`` Updates the Excel file with the new interviewee's name and email if there is an available slot. Returns Bool.
 
-    ``Developed by``: Ahmad
+    ``Developed by``: Ahmad, Brock
 
-    ``Contact``: ahmad.ahmad1@ucalgary.ca
+    ``Contact``: ahmad.ahmad1@ucalgary.ca, darkicewolf50@gmail.com
     """
-    available_slots = ReadDatabase()
-    
-    # Check if the requested slot is available in the `available_slots` structure
-    if date in available_slots and start_time in available_slots[date]:
-        with FileLock(lock_path):  # Ensure process-safe access to the file
-            # Load workbook and select "Sheet1" for updating appointments
-            workbook = load_workbook(file_path)
-            sheet = workbook["Interview Timetable"]
-            df = pd.read_excel(file_path)
 
-            # Find and update the row that matches the provided date and start time
-            for index, row in df.iterrows():
-                row_date = str(row['Date']).split(" ")[0]
-                row_start_time = str(row['Start Time'])
+    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
+    # name based off the 2025 naming system
+    file_path = f"OR{year_donation}-L-Interview Data.xlsx"
+    lock_path = f"OR{year_donation}-L-Interview Data.xlsx.lock"
 
-                if row_date == date and row_start_time == start_time:
-                    # Current entries for names and emails, and append new data with comma and space
-                    current_names = str(row['Interviewee Name']).strip()
-                    current_emails = str(row['Interviewee Email']).strip()
-                    
-                    updated_names = f"{current_names}, {interviewee_name}" if current_names != "nan" else interviewee_name
-                    updated_emails = f"{current_emails}, {interviewee_email}" if current_emails != "nan" else interviewee_email
+    # checks for if the file exisits for the year otherwise it will create one
+    if not (os.path.isfile(file_path) or os.path.isfile(lock_path)):
+        NoSheet()
+    else:
 
-                    # Update the cells with new names and emails
-                    name_cell = sheet.cell(row=index + 2, column=df.columns.get_loc('Interviewee Name') + 1)
-                    email_cell = sheet.cell(row=index + 2, column=df.columns.get_loc('Interviewee Email') + 1)
-                    name_cell.value = updated_names
-                    email_cell.value = updated_emails
+        available_slots = ReadDatabase()
+        
+        # Check if the requested slot is available in the `available_slots` structure
+        if date in available_slots and start_time in available_slots[date]:
+            with FileLock(lock_path):  # Ensure process-safe access to the file
+                # Load workbook and select "Sheet1" for updating appointments
+                workbook = load_workbook(file_path)
+                sheet = workbook["Interview Timetable"]
+                df = pd.read_excel(file_path)
 
-                    workbook.save(file_path)
-                    send_email(interviewee_email, interviewee_name, date, start_time)
-                    return True
+                # Find and update the row that matches the provided date and start time
+                for index, row in df.iterrows():
+                    row_date = str(row['Date']).split(" ")[0]
+                    row_start_time = str(row['Start Time'])
 
-    # If no slots available, return that the slot is unavailable
-    return False
+                    if row_date == date and row_start_time == start_time:
+                        # Current entries for names and emails, and append new data with comma and space
+                        current_names = str(row['Interviewee Name']).strip()
+                        current_emails = str(row['Interviewee Email']).strip()
+                        
+                        updated_names = f"{current_names}, {interviewee_name}" if current_names != "nan" else interviewee_name
+                        updated_emails = f"{current_emails}, {interviewee_email}" if current_emails != "nan" else interviewee_email
+
+                        # Update the cells with new names and emails
+                        name_cell = sheet.cell(row=index + 2, column=df.columns.get_loc('Interviewee Name') + 1)
+                        email_cell = sheet.cell(row=index + 2, column=df.columns.get_loc('Interviewee Email') + 1)
+                        name_cell.value = updated_names
+                        email_cell.value = updated_emails
+
+                        workbook.save(file_path)
+                        send_email(interviewee_email, interviewee_name, date, start_time)
+                        return True
+
+        # If no slots available, return that the slot is unavailable
+        return False
 
 
 def run_tests():

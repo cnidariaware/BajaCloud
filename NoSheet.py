@@ -1,13 +1,24 @@
 import openpyxl
 import yaml
-import json
 import datetime
 from openpyxl.styles import Font, Border, Side, PatternFill
 from openpyxl.formatting.rule import FormulaRule
 
 
 def NoSheet():
-    # sheet with an example properites
+    """
+    Creates the Template for more data to be added
+
+    ``REQUIRES``: ``None`` Ensure no other sheets are present, will overwrite them
+
+    ``PROMISES``: ``XLSX File`` give the template for recuitment for the year
+
+    ``Develop in part by``: Brock
+
+    ``Contact``: darkicewolf50@gmail.com
+
+    """
+
     yamlraw = """
 Recruitment Responses:
   - Frist Name (What we should call them): Steve
@@ -39,21 +50,20 @@ Interview TimeTable:
   - Category (if not general): Test
   - Interviewer(s) Name(s): Example
   - Status: Dropdown (Options in datahelp) #default is Unknown
-Data Helper:
+Data Helper And Info:
   - Status Dropdown:
       - Unknown
       - Done
       - No Show
       - Cancelled/Moved
+  - First time Startup: Call getschedule for the year
   - How to Add Dropdown: Go into data, click data validation, select list then select the area you want to get values from in the formula spot
     """
-
+    # uses the base above "yaml file" to create the base template
     yamlsheet = yaml.safe_load(yamlraw)
 
-    # print(json.dumps(yamlsheet, indent=4))
-
     year_donation = int(str(datetime.datetime.now().year)[2:]) # gets the last two digits of the current year then adds 1 for the current season
-    file_name = f"OR{year_donation + 1}-L-Interview Data.xlsx" # name based off the 2025 naming system
+    file_name = f"./OR{year_donation + 1}-L-Interview Data.xlsx" # name based off the 2025 naming system
 
     # border style
     border = Border( # defualt behaviour is thin
@@ -63,9 +73,6 @@ Data Helper:
         bottom=Side(style='thin')
     )
 
-    # for conditional formatting
-    red_fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
-
     # create workbook in memory
     work_book = openpyxl.Workbook()
     
@@ -73,45 +80,50 @@ Data Helper:
     default_sheet = work_book.active
     work_book.remove(default_sheet)
 
+    # decomposes the yaml file at the top and convertss it into a standard template
+    # does one sheet at a time
     for sheet_name, title_list in yamlsheet.items():
-        # add standard sheets
+        # add 1 standard sheet, by the outermost name
         sheet = work_book.create_sheet(sheet_name)
 
+        # gets header titles for each sheet, from the inner list
         titles =  [list(title.keys())[0] for title in title_list]
 
+        # makes the header titles to bold, have a border and have text
         for col_num, title in enumerate(titles, start=1):
             cell  = sheet.cell(row=1, column=col_num)
             cell.value = title
-
             cell.font = Font(bold=True)
             cell.border = border
 
-
+        # example data to show on what it will look like or to copy formatting down
         example_data = [list(data.values())[0] for data in title_list]
 
         for col_num, data in enumerate(example_data, start=1):
+            # for special case Data Helper where there a list in a dictionary
             if isinstance(data, list):
                 row_num = 2
                 for item in data:
                     cell = sheet.cell(row=row_num, column=col_num)
                     cell.value = item
                     row_num += 1
+            # adds data to the cells
             else:
                 cell  = sheet.cell(row=2, column=col_num)
-                cell.value = data
+                # changes the Dropdown data in status to unknown instead of the other option, only there for prep for a dropdown
                 if data == "Dropdown (Options in datahelp)":
                     cell.value = "Unknown"
+                else:
+                    cell.value = data
+
 
         if sheet.title == "Recruitment Responses":
             sheet.conditional_formatting.add("A2:I2", FormulaRule(formula=['=$I2="No"'], fill=PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")))
 
 
-
-
-            
-
     # save to storage
     work_book.save(file_name)
+    print(f"Created {file_name} for {year_donation}")
 
 if __name__ == "__main__":
     NoSheet()

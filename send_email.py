@@ -4,12 +4,20 @@ from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 import pytz  # For timezone handling
 
-def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="brock", date="10-1-2024", start_time="10:00 AM", location ="ENC25"):
+"""
+TODO add
+"""
+def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="brock", date="2024-1-10", start_time="10:00:00", location ="ENC25"):
     """ 
-    Sends an email notification to the interviewee and a static Gmail account.
+    Sends an email notification to the interviewee and to the uofcbaja account
     
-    ``REQUIRES``: interviewee_email (str), interviewee_name (str), date (str), start_time (str)
-    ``PROMISES``: Sends an email to interviewee and static email on successful appointment booking.
+    ``REQUIRES``: ``str`` interviewee_email, ``str`` interviewee_name, ``str`` date, ``str`` start_time
+
+    ``PROMISES``: ``EMAIL`` Sends an email to interviewee and static email on successful appointment booking.
+
+    ``Developed by``: Ahmad
+
+    ``Contact``: ahmad.ahmad1@ucalgary.ca
     """
     # Define static email for notifications and Gmail credentials
     static_email = "uofcbaja.noreply@gmail.com"
