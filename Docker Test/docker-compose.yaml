@@ -1,0 +1,10 @@
+services:
+  test-http-container:
+    container_name: test-http-container
+    ports:
+      - 8080:8080
+    volumes:
+      - ./mock:/app
+    build: .
+    # networks:
+    #   - testnet
