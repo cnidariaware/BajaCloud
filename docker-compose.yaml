@@ -2,7 +2,7 @@ services:
   bajacloud:
     container_name: bajacloud
     ports:
-      - 8080:8080
+      - 8080:8000
     volumes:
       - ./mock:/Interviews
     build: .

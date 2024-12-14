@@ -20,7 +20,7 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
     ``Contact``: ahmad.ahmad1@ucalgary.ca
     """
     # Define static email for notifications and Gmail credentials
-    static_email = "uofcbaja.noreply@gmail.com"
+    static_email = "uofcbaja@gmail.com"
     gmail_user = "uofcbaja.noreply@gmail.com"
     gmail_apppassword = "pver lpnt upjd zvld"
 

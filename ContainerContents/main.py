@@ -9,7 +9,7 @@ import os
 year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
 # name based off the 2025 naming system
 # Define the path to the Excel file and the lock file
-file_name = f"./Interviews/OR{year_donation}-L-Interview Data.xlsx"
+file_name = f"/Interviews/OR{year_donation}-L-Interview Data.xlsx"
 if not os.path.isfile(file_name):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     NoSheet(file_name)
