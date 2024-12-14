@@ -11,11 +11,11 @@ TODO change to use new tempate
 TODO change names to be more clear
 """
 
-def ReadDatabase():
+def ReadDatabase(file_path):
     """ 
     Reads the database for which slots are available
 
-    ``REQUIRES``: ``None``
+    ``REQUIRES``: ``File_Path`` where the file is
     
     ``PROMISES``: ``JSON`` Interview Available Slots
 
@@ -25,11 +25,10 @@ def ReadDatabase():
 
     """
 
-    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
-    # name based off the 2025 naming system
+    
     # Define the path to the Excel file and the lock file
-    excel_file_path = f"OR{year_donation}-L-Interview Data.xlsx"
-    lock_file_path = f"OR{year_donation}-L-Interview Data.xlsx.lock"
+    excel_file_path = file_path
+    lock_file_path = file_path + ".lock"
 
     # Retry parameters
     max_retries = 60  # Maximum number of retries if the file is locked
@@ -41,7 +40,7 @@ def ReadDatabase():
             # Attempt to acquire a shared read (non-blocking) access
             with FileLock(lock_file_path, timeout=0):  # Non-blocking, checks if the lock exists
                 # Load the Excel file into a pandas DataFrame
-                df = pd.read_excel(excel_file_path)
+                df = pd.read_excel(excel_file_path, sheet_name="Interview TimeTable")
 
                 # Initialize the dictionary to store the structured data
                 interview_data = {}
@@ -49,11 +48,11 @@ def ReadDatabase():
                 # Group the DataFrame by Date, Start Time, and Slot for organization
                 for _, row in df.iterrows():
                     date = str(row['Date'])
-                    start_time = str(row['Start Time'])
+                    start_time = str(row['Start Time Slot'])
                     slot = int(row['Slot']) if not pd.isna(row['Slot']) else 0
 
                     # Returns the number of interviewees in the slot; returns 0 if empty
-                    interviewee_amount = len(str(row['Interviewee Name']).split()) if str(row['Interviewee Name']) != "nan" else 0
+                    interviewee_amount = len(str(row['Interviewee Name (What to call them)']).split()) if str(row['Interviewee Name (What to call them)']) != "nan" else 0
 
                     # Check if the slot is available for an interviewee to attend
                     available_slots = interviewee_amount != slot
@@ -77,10 +76,16 @@ def ReadDatabase():
     # If max retries are exceeded, raise an error
     raise RuntimeError("Unable to access the database after multiple attempts due to a file lock.")
 
+
 # Example usage of the ReadDatabase function
 if __name__ == "__main__":
+    import datetime
+    year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
+    # name based off the 2025 naming system
+    # Define the path to the Excel file and the lock file
+    file_name = f"./Interviews/OR{year_donation}-L-Interview Data.xlsx"
     try:
-        data = ReadDatabase()
+        data = ReadDatabase(file_name)
         print(json.dumps(data, indent=4))
     except RuntimeError as e:
         print(e)

@@ -9,9 +9,9 @@ import os
 year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
 # name based off the 2025 naming system
 # Define the path to the Excel file and the lock file
-file_name = f"OR{year_donation}-L-Interview Data.xlsx"
+file_name = f"./Interviews/OR{year_donation}-L-Interview Data.xlsx"
 if not os.path.isfile(file_name):
-    NoSheet()
+    NoSheet(file_name)
 
 app = FastAPI()
 
@@ -52,7 +52,7 @@ async def getAppointments():
     """
     checks for all available slots in the database
 
-    ``REQUIRES``: ```None`` Nothing
+    ``REQUIRES``: ``None`` Nothing
 
     ``PROMISES``: ``JSON`` returns all of the avaialbe slots by date then time
 
@@ -62,7 +62,7 @@ async def getAppointments():
 
     """
     
-    res = getSchedulePackager()
+    res = getSchedulePackager(file_name)
 
     return JSONResponse(
         headers={
@@ -101,7 +101,7 @@ async def postSelectInterview(rawRequest: Appointment):
     """
     Books an interview, first checks if the slot is valid
 
-    ``REQUIRES``: ```Appointment`` A specifically formatted request
+    ``REQUIRES``: ``Appointment`` A specifically formatted request
 
     ``PROMISES``: ``JSON`` returns if the booking was successful or not
 
@@ -112,7 +112,7 @@ async def postSelectInterview(rawRequest: Appointment):
     """
 
     requestDict = {key: str(value) for key, value in rawRequest.dict().items()}
-    res = SelectAppointment(requestDict)
+    res = SelectAppointment(file_name, requestDict)
 
     return JSONResponse(
         headers={
