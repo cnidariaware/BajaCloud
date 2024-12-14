@@ -11,6 +11,7 @@ year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last t
 # Define the path to the Excel file and the lock file
 file_name = f"./Interviews/OR{year_donation}-L-Interview Data.xlsx"
 if not os.path.isfile(file_name):
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
     NoSheet(file_name)
 
 app = FastAPI()
@@ -124,3 +125,4 @@ async def postSelectInterview(rawRequest: Appointment):
         
         # status_code=200 commented out just to show how to change it if you wanted
         )
+

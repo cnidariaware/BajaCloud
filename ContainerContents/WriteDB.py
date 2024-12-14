@@ -35,7 +35,6 @@ def ReadDatabase(file_path, lock_path):
     for _, row in df.iterrows():
         # Convert Date and Start Time to string format for easier comparison
         date = str(row['Date']).split(" ")[0]  # Format date to YYYY-MM-DD
-        # print(date)
         start_time = str(row['Start Time Slot'])
             
         # Calculate the slot capacity and current number of interviewees
@@ -47,7 +46,6 @@ def ReadDatabase(file_path, lock_path):
         if interviewee_count < slot_capacity:
             # Organize data by date and time, keeping track of available slots and meeting duration
             if date not in interview_data:
-                # print(date)
                 interview_data[date] = {}
             interview_data[date][start_time] = {
                 'Meeting Duration': row['Meeting Duration'],
@@ -68,13 +66,11 @@ def AppendAppointment(file_path, date, start_time, interviewee_name, interviewee
 
     ``Contact``: ahmad.ahmad1@ucalgary.ca, darkicewolf50@gmail.com
     """
-    # print(f"{file_path}\n{date}\n{start_time}\n{interviewee_name}\n{interviewee_email}")
+    
     lock_path = file_path + ".lock"
 
     available_slots = ReadDatabase(file_path, lock_path)
-    print(date)
-    print(available_slots)
-    print(date in available_slots)
+
     # Check if the requested slot is available in the `available_slots` structure
     if date in available_slots and start_time in available_slots[date]:
         with FileLock(lock_path):  # Ensure process-safe access to the file
@@ -108,7 +104,7 @@ def AppendAppointment(file_path, date, start_time, interviewee_name, interviewee
                     workbook.save(file_path)
                     send_email(interviewee_email, interviewee_name, date, start_time)
                     return True
-    print("False")
+                
     # If no slots available, return that the slot is unavailable
     return False
 

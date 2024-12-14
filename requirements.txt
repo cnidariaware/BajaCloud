@@ -1,4 +1,0 @@
-"fastapi[standard]"
-pandas
-openpyxl
-yaml
