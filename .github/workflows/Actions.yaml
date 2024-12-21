@@ -1,7 +1,7 @@
 
 # name of the workflow.
 # this is optional.
-name: PyLint
+name: Interview Cloud Actions
 
 # events that will trigger this workflow.
 # here, we only have "pull_request", so the workflow will run
@@ -62,6 +62,9 @@ jobs:
       - name: build container image # build the container
         run: docker compose build
         id: docker-build
+      
+      - name: tag container image
+        run: docker tag darkicewolf50/uofcbajacloud:latest darkicewolf50/uofcbajacloud:latest
 
       - name: Upload to Dockerhub
         run: docker push darkicewolf50/uofcbajacloud:latest
