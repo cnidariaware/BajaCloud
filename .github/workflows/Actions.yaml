@@ -62,6 +62,9 @@ jobs:
       - name: build container image # build the container
         run: docker compose build --no-cache
         id: docker-build
+        
+      - name: check image names
+        run: docker image ls
 
       - name: Upload to Dockerhub
         run: docker push darkicewolf50/uofcbajacloud:latest
