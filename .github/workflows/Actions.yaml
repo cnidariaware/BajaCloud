@@ -42,5 +42,5 @@ jobs:
         run: pip install ruff
 
       - name: Lint
-        uses: ruff check ./*/*.py --ignore E402
+        run: ruff check ./*/*.py --ignore E402
 
