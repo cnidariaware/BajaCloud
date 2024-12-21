@@ -1,4 +1,3 @@
-import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 hit_count = 0  # In-memory counter

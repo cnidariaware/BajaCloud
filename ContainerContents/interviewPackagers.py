@@ -35,15 +35,7 @@ def SelectAppointment (file_name, appointmentJson):
     ``Contact``: darkicewolf50@gmail.com
 
     """
-    """
-    Example of an incoming http post body
-    {
-        "intervieweeName": "Brock",
-        "date": "9/16/2024",
-        "startTime": "11:00:00",
-        "intervieweeEmail": "darkicewolf50@gmail.com"
-    }
-    """
+
     try:
         validEmail = validate_email(appointmentJson["intervieweeEmail"], check_deliverability=True)
         if validEmail:
@@ -58,5 +50,6 @@ def SelectAppointment (file_name, appointmentJson):
             return resBody
         
     except EmailNotValidError as e:
+        print(e)
         return {"Success": False, "validEmail": "false"}
 

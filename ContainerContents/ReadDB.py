@@ -3,7 +3,6 @@ import json
 from filelock import FileLock, Timeout
 import time
 
-from NoSheet import NoSheet
 import datetime
 
 """
@@ -47,7 +46,7 @@ def ReadDatabase(file_path):
 
                 # Group the DataFrame by Date, Start Time, and Slot for organization
                 for _, row in df.iterrows():
-                    date = str(row['Date'])
+                    date = str(row['Date']).split(" ")[0]
                     start_time = str(row['Start Time Slot'])
                     slot = int(row['Slot']) if not pd.isna(row['Slot']) else 0
 
