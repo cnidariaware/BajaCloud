@@ -1,6 +1,6 @@
 services:
   bajacloud:
-    container_name: bajacloud
+    container_name: darkicewolf50/uofcbajacloud:latest
     ports:
       - 8080:8000
     volumes:

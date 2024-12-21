@@ -63,8 +63,8 @@ jobs:
         run: docker compose build
         id: docker-build
       
-      - name: tag container image
-        run: docker tag darkicewolf50/uofcbajacloud:latest darkicewolf50/uofcbajacloud:latest
+      - name: tag container image # needed to rename form stupid default name that github gives it
+        run: docker tag docker.io/library/interview-backend-bajacloud darkicewolf50/uofcbajacloud:latest
 
       - name: Upload to Dockerhub
         run: docker push darkicewolf50/uofcbajacloud:latest
