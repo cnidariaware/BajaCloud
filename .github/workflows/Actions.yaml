@@ -60,7 +60,7 @@ jobs:
         id: docker-login
 
       - name: build container image # build the container
-        run: docker compose build . 
+        run: docker compose build
         id: docker-build
 
       - name: Upload to Dockerhub
