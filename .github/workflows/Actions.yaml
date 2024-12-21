@@ -60,7 +60,7 @@ jobs:
         id: docker-login
 
       - name: build container image # build the container
-        run: docker compose build --no-cache --verbose
+        run: docker compose build --no-cache
         id: docker-build
 
       - name: Upload to Dockerhub
