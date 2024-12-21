@@ -44,3 +44,27 @@ jobs:
       - name: Lint
         run: ruff check ./*/*.py --ignore E402
 
+  Dockerhub:
+    runs-on: ubuntu-latest
+    needs: ruffLint # will only run if linter is successful
+    if: github.ref == 'refs/heads/main'  # Runs only if the push/PR merge is to 'main'
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Login to Dockerhub # log into docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}   # Using secret for Docker username
+          password: ${{ secrets.DOCKER_PASSWORD }}   # Using secret for Docker password
+        id: docker-login
+
+      - name: build container image # build the container
+        run: docker build -t darkicewolf50/uofcbajacloud:latest
+        id: docker-build
+
+      - name: Upload to Dockerhub
+        run: docker push darkicewolf50/uofcbajacloud:latest
+        if: ${{ steps.docker-login.outcome == 'success' && steps.docker-build.outcome == 'success' }}
+
+
