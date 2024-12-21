@@ -1,10 +1,11 @@
 services:
   bajacloud:
-    container_name: darkicewolf50/uofcbajacloud:latest
+    container_name: uofcbajacloud
+    image:  darkicewolf50/uofcbajacloud:latest
     ports:
       - 8080:8000
     volumes:
-      - ./mock:/Interviews
-    build: .
+      - ./L - Logistics/Interviews:/Interviews
+    # build: .
     # networks:
     #   - testnet
