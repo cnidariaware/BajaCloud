@@ -42,7 +42,7 @@ jobs:
         run: pip install ruff
 
       - name: Lint
-        run: ruff check ./*.py ./**/*/*.py --ignore E402
+        run: ruff check  --ignore E402
 
   Dockerhub:
     runs-on: ubuntu-latest
