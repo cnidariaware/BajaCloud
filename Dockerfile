@@ -4,10 +4,11 @@ FROM python:3.10-slim
 # Set the working directory inside the container
 WORKDIR /BajaCloudBackend
 
-# Copy the current directory contents into the container at /app
+# Copy the current directory contents into the container at /workingdir/InterviewBooking
 COPY ./InterviewBooking /BajaCloudBackend/InterviewBooking
-# Copy the main file to the working directory
+# Copy the main file to the working container directory
 COPY main.py /BajaCloudBackend
+# Copy requirements to working container directory
 COPY requirements.txt /BajaCloudBackend
 
 # Install any necessary dependencies
