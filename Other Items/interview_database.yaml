@@ -1,0 +1,64 @@
+Data:
+  September 16:
+    Meeting Duration: 30 min
+    Meeting Start Times:
+      - 10:00 AM:
+          Interviewer:
+            - Name: John
+            - Email: john@example.com
+          Interviewee:
+            - Name: Jane
+            - Email: jane@example.com
+          Category: PowerDrive
+          Status: Done
+          Slot: 2
+      - 10:30 AM:
+          Interviewer:
+            - Name: Jay
+            - Email: jay@example.com
+          Interviewee:
+            - Name: Zoz
+            - Email: Zoz@example.com
+          Category: PowerTrain
+          Status: Pending
+          Slot: 3
+      - 11:00 AM:
+          Interviewer:
+            - Name: Ali
+            - Email: Ali@example.com
+          Interviewee:
+            - Name: Bob
+            - Email: Bob@example.com
+          Category: Software
+          Status: Rescheduled
+          Slot: 1
+      - 11:30 AM:
+          Interviewer:
+            - Name:
+            - Email:
+          Interviewee:
+            - Name:
+            - Email:
+          Category:
+          Status:
+          Slot: 1
+      - 12:00 PM:
+          Interviewer:
+            - Name: Ali, John
+            - Email: Ali@example.com, Jhon@example.com
+          Interviewee:
+            - Name: Bob
+            - Email: Bob@example.com
+          Category: Software
+          Status: Cancelled
+          Slot: 1
+      - 12:30 PM:
+          Interviewer:
+            - Name: Ali
+            - Email: Ali@example.com
+          Interviewee:
+            - Name: Bob, Jish
+            - Email: Bob@example.com, jish@example.com
+          Category: Software
+          Status: Cancelled
+          Slot: 2
