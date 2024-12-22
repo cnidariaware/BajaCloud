@@ -8,6 +8,7 @@ WORKDIR /BajaCloudBackend
 COPY ./InterviewBooking /BajaCloudBackend/InterviewBooking
 # Copy the main file to the working directory
 COPY main.py /BajaCloudBackend
+COPY requirements.txt /BajaCloudBackend
 
 # Install any necessary dependencies
 RUN pip install --no-cache-dir -r requirements.txt
