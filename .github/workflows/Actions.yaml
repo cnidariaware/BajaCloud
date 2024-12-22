@@ -1,7 +1,7 @@
 
 # name of the workflow.
 # this is optional.
-name: Interview Cloud Actions
+name: Cloud Actions
 
 # events that will trigger this workflow.
 # here, we only have "pull_request", so the workflow will run
