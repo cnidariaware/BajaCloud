@@ -1,4 +1,4 @@
-from .ReadDB import ReadDatabase
+from ReadDB import ReadDatabase
 
 
 def getSchedulePackager(file_name):
@@ -18,7 +18,7 @@ def getSchedulePackager(file_name):
             "interviewDates": ReadDatabase(file_path=file_name)
         }
 
-from .WriteDB import AppendAppointment
+from WriteDB import AppendAppointment
 from email_validator import validate_email, EmailNotValidError
 
 

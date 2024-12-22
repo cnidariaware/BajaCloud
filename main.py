@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from .InterviewBooking.NoSheet import NoSheet
+from InterviewBooking.NoSheet import NoSheet
 import datetime
 import os
 
@@ -46,7 +46,7 @@ def get_root():
         )
 
 
-from .InterviewBooking.interviewPackagers import getSchedulePackager
+from InterviewBooking.interviewPackagers import getSchedulePackager
 
 @app.get("/getAppointments")
 async def getAppointments():
@@ -76,7 +76,7 @@ async def getAppointments():
         # status_code=200 commented out just to show how to change it if you wanted
         )
 
-from .InterviewBooking.interviewPackagers import SelectAppointment
+from InterviewBooking.interviewPackagers import SelectAppointment
 
 class Appointment(BaseModel):
     """
