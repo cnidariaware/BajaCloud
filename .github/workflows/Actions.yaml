@@ -12,7 +12,7 @@ on:
 
   push:
     branches: 
-      - main
+      - master
 
 # each workflow must have at least one job.
 # jobs run in parallel by default (we can change that).
@@ -47,7 +47,7 @@ jobs:
   Dockerhub:
     runs-on: ubuntu-latest
     needs: ruffLint # will only run if linter is successful
-    if: ${{ github.ref == 'refs/heads/main' || github.event.pull_request.merged == true }}  # Runs if it's a push to 'main' or a merged PR to 'main'
+    if: ${{ github.ref == 'refs/heads/master' || github.event.pull_request.merged == true }}  # Runs if it's a push to 'main' or a merged PR to 'main'
     steps:
       - name: checkout
         uses: actions/checkout@v3

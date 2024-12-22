@@ -1,8 +1,0 @@
-services:
-  web:
-    container_name: test
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./:/code

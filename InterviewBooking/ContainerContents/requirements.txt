@@ -1,5 +1,0 @@
-fastapi[standard]
-pandas
-openpyxl
-PyYAML
-filelock
