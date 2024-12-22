@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 from openpyxl import load_workbook
-from send_email import send_email
+from .send_email import send_email
 from filelock import FileLock 
 
 
