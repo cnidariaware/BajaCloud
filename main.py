@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from InterviewBooking.NoSheet import NoSheet
@@ -15,6 +16,15 @@ if not os.path.isfile(file_name):
     NoSheet(file_name)
 
 app = FastAPI()
+
+# Add CORS Middleware to allow cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins, you can replace "*" with a specific list like ["https://example.com"]
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.get("/")
 def get_root():
