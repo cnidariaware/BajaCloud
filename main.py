@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from InterviewBooking.NoSheet import NoSheet
@@ -16,6 +17,14 @@ if not os.path.isfile(file_name):
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # This allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 """
 YOU MUST ADD CORS MANUALLY TO ANY METHOD USE THIS TEMPLATE
 ADD TO JSONRESPONSE
