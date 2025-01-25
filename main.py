@@ -115,8 +115,8 @@ class Appointment(BaseModel):
 
     """
     intervieweeName: str
-    date: str 
     startTime: str
+    date: str 
     intervieweeEmail: str
 
 
