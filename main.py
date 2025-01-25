@@ -15,16 +15,20 @@ if not os.path.isfile(file_name):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     NoSheet(file_name)
 
-app = FastAPI()
 
-# Add CORS Middleware to allow cross-origin requests
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins, you can replace "*" with a specific list like ["https://example.com"]
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
-)
+app = FastAPI()
+"""
+YOU MUST ADD CORS MANUALLY TO ANY METHOD USE THIS TEMPLATE
+ADD TO JSONRESPONSE
+
+        headers={
+            "isBase64Encoded": "false",  # Header Modification
+            # Adding CORS headers explicitly
+            "Access-Control-Allow-Origin": "*",  # Allow all origins
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Headers": "*",  # Allow all headers
+        },
+"""
 
 @app.get("/")
 def get_root():
@@ -47,6 +51,9 @@ def get_root():
     return JSONResponse(
         headers={
             "isBase64Encoded": "false",  # Header Modification
+            "Access-Control-Allow-Origin": "*",  # Allow all origins
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
             "body": res # Ensure res is a dict or do json.dumps to enusre it is stringified
@@ -78,6 +85,10 @@ async def getAppointments():
     return JSONResponse(
         headers={
             "isBase64Encoded": "false",  # Header Modification
+            # Adding CORS headers explicitly
+            "Access-Control-Allow-Origin": "*",  # Allow all origins
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
             "body": res # Ensure res is a dict or do json.dumps to enusre it is stringified
@@ -128,6 +139,10 @@ async def postSelectInterview(rawRequest: Appointment):
     return JSONResponse(
         headers={
             "isBase64Encoded": "false",  # Header Modification
+            # Adding CORS headers explicitly
+            "Access-Control-Allow-Origin": "*",  # Allow all origins
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
             "body": res # Ensure res is a dict or do json.dumps to enusre it is stringified
