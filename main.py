@@ -20,6 +20,9 @@ app = FastAPI()
 YOU MUST ADD CORS MANUALLY TO ANY METHOD USE THIS TEMPLATE
 ADD TO JSONRESPONSE
 
+USE APPROPRIATE METHOD fOR THE TYPE IE
+@app.get = ... "Access-Control-Allow-Methods": "GET", ...
+
         headers={
             "isBase64Encoded": "false",  # Header Modification
             # Adding CORS headers explicitly
@@ -51,7 +54,7 @@ def get_root():
         headers={
             "isBase64Encoded": "false",  # Header Modification
             "Access-Control-Allow-Origin": "*",  # Allow all origins
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Methods": "GET", # Allowed methods
             "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
@@ -86,7 +89,7 @@ async def getAppointments():
             "isBase64Encoded": "false",  # Header Modification
             # Adding CORS headers explicitly
             "Access-Control-Allow-Origin": "*",  # Allow all origins
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Methods": "GET", # Allowed methods
             "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
@@ -140,7 +143,7 @@ async def postSelectInterview(rawRequest: Appointment):
             "isBase64Encoded": "false",  # Header Modification
             # Adding CORS headers explicitly
             "Access-Control-Allow-Origin": "*",  # Allow all origins
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",  # Allowed methods
+            "Access-Control-Allow-Methods": "POST",  # Allowed methods
             "Access-Control-Allow-Headers": "*",  # Allow all headers
         },
         content={
