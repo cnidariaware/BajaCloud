@@ -10,7 +10,7 @@ import os
 year_donation = int(str(datetime.datetime.now().year)[2:]) + 1 # gets the last two digits of the current year then adds 1 for the current season
 # name based off the 2025 naming system
 # Define the path to the Excel file and the lock file
-file_name = f"/Interviews/OR{year_donation}-L-Interview Data.xlsx"
+file_name = f"./Interviews/OR{year_donation}-L-Interview Data.xlsx"
 if not os.path.isfile(file_name):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     NoSheet(file_name)
@@ -143,10 +143,9 @@ async def postSelectInterview(rawRequest: Appointment):
     ``Contact``: darkicewolf50@gmail.com
 
     """
-
-    requestDict = {key: str(value) for key, value in rawRequest.dict().items()}
+    requestDict = {key: str(value) for key, value in rawRequest.model_dump().items()}
     res = SelectAppointment(file_name, requestDict)
-
+    
     return JSONResponse(
         headers={
             "isBase64Encoded": "false",  # Header Modification
@@ -161,4 +160,3 @@ async def postSelectInterview(rawRequest: Appointment):
         
         # status_code=200 commented out just to show how to change it if you wanted
         )
-
