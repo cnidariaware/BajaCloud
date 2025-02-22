@@ -1,6 +1,5 @@
 import pandas as pd
 import json
-import datetime
 from openpyxl import load_workbook
 from .send_email import send_email
 from filelock import FileLock 
