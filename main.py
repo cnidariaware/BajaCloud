@@ -143,10 +143,9 @@ async def postSelectInterview(rawRequest: Appointment):
     ``Contact``: darkicewolf50@gmail.com
 
     """
-
-    requestDict = {key: str(value) for key, value in rawRequest.dict().items()}
+    requestDict = {key: str(value) for key, value in rawRequest.model_dump().items()}
     res = SelectAppointment(file_name, requestDict)
-
+    
     return JSONResponse(
         headers={
             "isBase64Encoded": "false",  # Header Modification
@@ -161,4 +160,3 @@ async def postSelectInterview(rawRequest: Appointment):
         
         # status_code=200 commented out just to show how to change it if you wanted
         )
-

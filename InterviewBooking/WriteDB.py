@@ -33,7 +33,8 @@ def ReadDatabase(file_path, lock_path):
     # Process each row in the DataFrame to structure data by date and time
     for _, row in df.iterrows():
         # Convert Date and Start Time to string format for easier comparison
-        date = str(row['Date']).split(" ")[0]  # Format date to YYYY-MM-DD
+        date = str(row['Date']).split(" ")[0]  # Extract the date part
+
         start_time = str(row['Start Time Slot'])
             
         # Calculate the slot capacity and current number of interviewees

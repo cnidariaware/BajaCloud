@@ -1,4 +1,6 @@
+import datetime
 from .ReadDB import ReadDatabase
+
 
 
 def getSchedulePackager(file_name):
@@ -39,7 +41,8 @@ def SelectAppointment (file_name, appointmentJson):
     try:
         validEmail = validate_email(appointmentJson["intervieweeEmail"], check_deliverability=True)
         if validEmail:
-            status = AppendAppointment(file_path=file_name, date=appointmentJson["date"], start_time=appointmentJson["startTime"], interviewee_name=appointmentJson["intervieweeName"], interviewee_email=appointmentJson["intervieweeEmail"])
+            date_formatted = datetime.datetime.strptime(appointmentJson["date"], '%m/%d/%Y').strftime('%Y-%m-%d')
+            status = AppendAppointment(file_path=file_name, date=date_formatted, start_time=appointmentJson["startTime"], interviewee_name=appointmentJson["intervieweeName"], interviewee_email=appointmentJson["intervieweeEmail"])
             
             if status:
                 resBody = {"Success": True, "validEmail": "true"}
