@@ -64,8 +64,8 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
 					align="center"
 					style="width: 48%; margin-right: 1%">
 					<a
-						href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Interview+with+{interviewee_name}&dates=20241130T100000Z/20241130T110000Z&details=Interview+with+UCalgary+Baja+Team&location=ENC37"
-						target="_blank"
+						href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=UCalgary+Baja+Interview+with+{interviewee_name}&dates={start_time_google}/{end_time_google}&details=Interview+with+UCalgary+Baja+Team&location={location}"
+            target="_blank"
 						style="
 							text-decoration: none;
 							display: inline-block;
@@ -92,8 +92,8 @@ def send_email(interviewee_email="darkicewolf50@gmail.com", interviewee_name="br
 					align="center"
 					style="width: 48%; margin-left: 1%">
 					<a
-						href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Interview+with+{interviewee_name}&body=Interview+with+UCalgary+Baja+Team&location=ENC37&startdt=2024-11-30T10:00:00&enddt=2024-11-30T11:00:00"
-						target="_blank"
+						href="https://outlook.live.com/calendar/0/deeplink/compose?subject=UCalgary+Baja+Interview+with+{interviewee_name}&body=Interview+with+UCalgary+Baja+Team&location={location}&startdt={outlook_start}&enddt={outlook_end}"
+            target="_blank"
 						style="
 							text-decoration: none;
 							display: inline-block;
